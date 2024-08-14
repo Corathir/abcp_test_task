@@ -15,6 +15,23 @@ class TsReturnOperation extends ReferencesOperation
     public const TYPE_NEW    = 1;
     public const TYPE_CHANGE = 2;
 
+    protected function getValidator()
+    {
+        return new Validator([
+            'resellerId' => 'required|integer',
+            'notificationType' => 'required|integer',
+            'clientId' => 'required|integer',
+            'creatorId' => 'required|integer',
+            'expertId' => 'required|integer',
+            'consumptionId' => 'required|integer',
+            'complaintId' => 'required|integer',
+            'consumptionNumber' => 'required',
+            'agreementNumber' => 'required',
+            'complaintNumber' => 'required',
+            'date' => 'required|date',
+        ]);
+    }
+
     /**
      * @throws \Exception
      */
@@ -32,20 +49,7 @@ class TsReturnOperation extends ReferencesOperation
             ],
         ];
 
-        $validator = new Validator([
-            'resellerId' => 'required|integer',
-            'notificationType' => 'required|integer',
-            'clientId' => 'required|integer',
-            'creatorId' => 'required|integer',
-            'expertId' => 'required|integer',
-            'consumptionId' => 'required|integer',
-            'complaintId' => 'required|integer',
-            'consumptionNumber' => 'required',
-            'agreementNumber' => 'required',
-            'complaintNumber' => 'required',
-            'date' => 'required|date',
-        ]);
-
+        $validator = $this->getValidator();
         if (!$validator->isValid($data)) {
             $result['notificationClientBySms']['message'] = implode(PHP_EOL, $validator->getLastErrors());
             return $result;
