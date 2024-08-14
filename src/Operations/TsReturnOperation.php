@@ -38,6 +38,12 @@ class TsReturnOperation extends ReferencesOperation
             'clientId' => 'required|integer',
             'creatorId' => 'required|integer',
             'expertId' => 'required|integer',
+            'consumptionId' => 'required|integer',
+            'complaintId' => 'required|integer',
+            'consumptionNumber' => 'required',
+            'agreementNumber' => 'required',
+            'complaintNumber' => 'required',
+            'date' => 'required|date',
         ]);
 
         if (!$validator->isValid($data)) {
@@ -80,13 +86,6 @@ class TsReturnOperation extends ReferencesOperation
             'DATE'               => (string)$data['date'],
             'DIFFERENCES'        => $differences,
         ];
-
-        // Если хоть одна переменная для шаблона не задана, то не отправляем уведомления
-        foreach ($templateData as $key => $tempData) {
-            if (empty($tempData)) {
-                throw new \Exception("Template Data ({$key}) is empty!", 500);
-            }
-        }
 
         $emailFrom = ResellerEmailSettings::getResellerEmailFrom($resellerId);
         // Получаем email сотрудников из настроек
