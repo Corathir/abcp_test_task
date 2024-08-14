@@ -5,6 +5,8 @@ namespace NW\WebService\References\Operations\Notification\Operations;
 use NW\WebService\References\Operations\Notification\Models\Contractor;
 use NW\WebService\References\Operations\Notification\Models\Employee;
 use NW\WebService\References\Operations\Notification\Models\Seller;
+use NW\WebService\References\Operations\Notification\NotificationEvents;
+use NW\WebService\References\Operations\Notification\ResellerEmailSettings;
 use NW\WebService\References\Operations\Notification\Status;
 use NW\WebService\References\Operations\Notification\Validators\Validator;
 
@@ -86,9 +88,9 @@ class TsReturnOperation extends ReferencesOperation
             }
         }
 
-        $emailFrom = getResellerEmailFrom($resellerId);
+        $emailFrom = ResellerEmailSettings::getResellerEmailFrom($resellerId);
         // Получаем email сотрудников из настроек
-        $emails = getEmailsByPermit($resellerId, 'tsGoodsReturn');
+        $emails = ResellerEmailSettings::getEmailsByPermit($resellerId, 'tsGoodsReturn');
         if (!empty($emailFrom) && count($emails) > 0) {
             foreach ($emails as $email) {
                 MessagesClient::sendMessage([
