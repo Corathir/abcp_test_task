@@ -59,7 +59,7 @@ class TsReturnOperation extends ReferencesOperation
             $reseller = Seller::getById((int)$resellerId);
             $client = Contractor::getById((int)$data['clientId']);
             $creator = Employee::getById((int)$data['creatorId']);
-            $et = Employee::getById((int)$data['expertId']);
+            $expert = Employee::getById((int)$data['expertId']);
         } catch (\Exception $e) {
             $result['notificationClientBySms']['message'] = $e->getMessage();
             return $result;
@@ -81,7 +81,7 @@ class TsReturnOperation extends ReferencesOperation
             'CREATOR_ID'         => (int)$data['creatorId'],
             'CREATOR_NAME'       => $creator->getFullName(),
             'EXPERT_ID'          => (int)$data['expertId'],
-            'EXPERT_NAME'        => $et->getFullName(),
+            'EXPERT_NAME'        => $expert->getFullName(),
             'CLIENT_ID'          => (int)$data['clientId'],
             'CLIENT_NAME'        => $client->getFullName(),
             'CONSUMPTION_ID'     => (int)$data['consumptionId'],
